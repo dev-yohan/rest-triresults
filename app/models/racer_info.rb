@@ -1,6 +1,7 @@
 class RacerInfo
   include Mongoid::Document
 
+  #document fields
   field :racer_id, as: :_id
   field :_id, default:->{ racer_id }
   field :fn,  type: String, as: :first_name
