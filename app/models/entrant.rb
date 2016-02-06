@@ -24,4 +24,8 @@ class Entrant
     
   end
 
+  def the_race
+    self.race.race
+  end  
+
 end
