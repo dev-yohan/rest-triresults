@@ -9,8 +9,18 @@ class Entrant
   field :gender,  type: Placing, as: :gender
   field :group,   type: Placing, as: :group
 
-  embeds_many :results, class_name: 'LegResult', as: :entrant
+  embeds_many :results, class_name: 'LegResult', as: :entrant, after_add: :update_total, after_remove: :update_total
 
   default_scope ->{order_by(:"event.o".desc)}
+
+  def update_total(result)
+    self.secs = 0
+    self.results.each do |res|
+      if res.secs
+        self.secs = self.secs + res.secs
+      end  
+    end  
+    
+  end
 
 end
