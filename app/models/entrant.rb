@@ -11,4 +11,6 @@ class Entrant
 
   embeds_many :results, class_name: 'LegResult', as: :entrant
 
+  default_scope ->{order_by(:"event.o".desc)}
+
 end

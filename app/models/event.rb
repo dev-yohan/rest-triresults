@@ -7,6 +7,7 @@ class Event
    field :u,     type: String, as: :units
 
    embedded_in :parent, class_name: 'Race', polymorphic: true, touch: true
+   
 
    validates :order, presence: true
    validates :name,  presence: true
