@@ -6,6 +6,8 @@ class Event
    field :d,     type: Float, as: :distance
    field :u,     type: String, as: :units
 
+   embedded_in :parent, class_name: 'Race', polymorphic: true, touch: true
+
    def meters
     if self.u == "meters"
       self.d
