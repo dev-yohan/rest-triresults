@@ -7,12 +7,13 @@ class Address
   #field :location, type: Point, as: :loc
 
    attr_accessor :city, :state, :location
-
-  def initialize city, state, loc
-    @city = city
-    @state = state
-    @location = Point.new(loc[:coordinates][0], loc[:coordinates][1]) if loc && loc[:coordinates]
+ 
+  def initialize city = nil, state = nil, loc = nil
+    @city = city unless city.nil?
+    @state = state unless state.nil?
+    @location = Point.new(loc[:coordinates][0], loc[:coordinates][1]) if loc && loc[:coordinates] unless loc.nil?
   end
+
 
    #creates a DB-form of the instance
   def mongoize
