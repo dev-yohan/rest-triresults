@@ -11,6 +11,7 @@ class Entrant
 
   embeds_many :results, class_name: 'LegResult', as: :entrant, after_add: :update_total, after_remove: :update_total
   embeds_one :race, class_name: 'RaceRef'
+  embeds_one :racer, class_name: 'RacerInfo', as: :parent
 
   default_scope ->{order_by(:"event.o".desc)}
 
