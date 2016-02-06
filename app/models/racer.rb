@@ -1,5 +1,6 @@
 class Racer
   include Mongoid::Document
+  
 
   before_create do |racer|
     racer.info.id = racer.id
