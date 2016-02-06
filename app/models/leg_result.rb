@@ -4,6 +4,8 @@ class LegResult
 
   field :secs,    type: Float, as: :secs
 
+  embedded_in :entrant, class_name: 'Entrant'
+
   def calc_ave
     
   end  
