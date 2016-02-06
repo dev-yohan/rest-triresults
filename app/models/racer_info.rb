@@ -17,7 +17,6 @@ class RacerInfo
 
   embedded_in :parent, class_name: 'Racer', polymorphic: true
 
-
   ["city", "state"].each do |action|
     define_method("#{action}") do
     self.residence ? self.residence.send("#{action}") : nil
