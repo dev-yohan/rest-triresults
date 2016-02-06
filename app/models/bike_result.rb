@@ -4,9 +4,10 @@ class BikeResult < LegResult
   field :mph,    type: Float, as: :mph
 
   def calc_ave 
-    if self.event && self.secs
-      self.mph = (self.secs/60)
-    end 
+    if event && secs
+      miles = event.miles
+      self.mph = miles.nil? ? nil : miles*3600/secs
+    end
   end  
 
   
