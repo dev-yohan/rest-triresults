@@ -10,6 +10,6 @@ class RacerInfo
   field :yr,  type: Integer, as: :birth_year
   field :res, type: Address, as: :residence
 
-
+  embedded_in :parent, class_name: 'Racer', polymorphic: true
 
 end  
