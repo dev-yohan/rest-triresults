@@ -6,11 +6,18 @@ class Race
   field :date,  type: Date, as: :date
   field :loc,   type: Address, as: :location
 
+  field :next_bib, type: Integer, as: :next_bib, default: 0
+
   embeds_many :events, class_name: 'Event', as: :parent, order: [:order.asc]
   has_many :entrants, class_name: 'Entrant', foreign_key: 'race._id', order: [:secs.asc, :bib.asc], dependent: :delete
 
   scope :upcoming, ->{ where(:date.gte => Date.today) }
   scope :past, ->{ where(:date.lt => Date.today) }
+
+  def next_bib 
+    self.inc(next_bib: 1)
+    self[:next_bib]
+  end
 
   DEFAULT_EVENTS = {"swim"=>{:order=>0, :name=>"swim", :distance=>1.0, :units=>"miles"},
   "t1"=> {:order=>1, :name=>"t1"},
@@ -47,6 +54,7 @@ class Race
     end
 
   end
+
 
   ["city", "state"].each do |action|
 
