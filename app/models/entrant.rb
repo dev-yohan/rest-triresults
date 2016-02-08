@@ -24,6 +24,9 @@ class Entrant
   delegate :name, :name=, to: :race, prefix: "race"
   delegate :date, :date=, to: :race, prefix: "race"
 
+  scope :upcoming, ->{ where(:"race.date".gte => Date.today) }
+  scope :past, ->{ where(:"race.date".lt => Date.today) }
+
   RESULTS = {"swim"=>SwimResult,
     "t1"=>LegResult,
     "bike"=>BikeResult,
@@ -31,9 +34,6 @@ class Entrant
     "run"=>RunResult}
 
   RESULTS.keys.each do |name|
-  #create_or_find result
-  #assign event details to result
-  #expose setter/getter for each property of each result
     define_method("#{name}") do
       result=results.select {|result| name==result.event.name if result.event}.first
       if !result
