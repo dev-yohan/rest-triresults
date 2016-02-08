@@ -24,6 +24,45 @@ class Entrant
   delegate :name, :name=, to: :race, prefix: "race"
   delegate :date, :date=, to: :race, prefix: "race"
 
+  RESULTS = {"swim"=>SwimResult,
+    "t1"=>LegResult,
+    "bike"=>BikeResult,
+    "t2"=>LegResult,
+    "run"=>RunResult}
+
+  RESULTS.keys.each do |name|
+  #create_or_find result
+  #assign event details to result
+  #expose setter/getter for each property of each result
+    define_method("#{name}") do
+      result=results.select {|result| name==result.event.name if result.event}.first
+      if !result
+        result=RESULTS["#{name}"].new(:event=>{:name=>name})
+        results << result
+      end
+      result
+    end
+
+    define_method("#{name}=") do |event|
+      event=self.send("#{name}").build_event(event.attributes)
+    end
+
+    RESULTS["#{name}"].attribute_names.reject {|r|/^_/===r}.each do |prop|
+
+      define_method("#{name}_#{prop}") do
+        event=self.send(name).send(prop)
+      end
+
+      define_method("#{name}_#{prop}=") do |value|
+        event=self.send(name).send("#{prop}=",value)
+        update_total nil if /secs/===prop
+      end
+    end
+
+  end
+
+
+
   default_scope ->{order_by(:"event.o".desc)}
 
   def update_total(result)
