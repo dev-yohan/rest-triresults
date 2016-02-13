@@ -32,6 +32,14 @@ module Api
       end
     end  
 
+    def update
+      race = Race.find(params[:id])
+      race.update(race_params)
+      race.save
+
+      render json: race, status: :ok
+    end  
+
   private
     def race_params
       params.require(:race).permit(:name, :date)
