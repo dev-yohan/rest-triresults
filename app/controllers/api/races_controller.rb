@@ -32,6 +32,13 @@ module Api
       end
     end  
 
+    def destroy
+      race = Race.find(params[:id])
+      race.delete
+
+      render :nothing=>true, :status => :no_content
+    end  
+
     def update
       race = Race.find(params[:id])
       race.update(race_params)
