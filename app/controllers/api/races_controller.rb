@@ -16,6 +16,8 @@ module Api
         render plain: "/api/races/#{params[:id]}"
       else
         #real implementation ...
+        race = Race.find(params[:id])
+        render json: race, status: :ok
       end
     end  
 
