@@ -24,11 +24,16 @@ module Api
         render plain: params[:race][:name], status: :ok
       else
         #real implementation
-        race = Race.new(params[:race])
+        race = Race.new(race_params)
         race.save
-        render plain: race.name, status: :ok
+        render plain: race.name, status: :created
       end
     end  
+
+  private
+    def race_params
+      params.require(:race).permit(:name, :date)
+    end
 
   end
 end
