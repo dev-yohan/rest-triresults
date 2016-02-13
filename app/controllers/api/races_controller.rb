@@ -24,6 +24,9 @@ module Api
         render plain: params[:race][:name], status: :ok
       else
         #real implementation
+        race = Race.new(params[:race])
+        race.save
+        render plain: race.name, status: :ok
       end
     end  
 
