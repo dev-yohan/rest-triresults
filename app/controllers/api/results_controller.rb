@@ -23,6 +23,7 @@ module Api
         #race.entrants.max(:updated_at)
         @race=Race.find(params[:race_id])
         @entrants=@race.entrants
+        fresh_when(last_modified: @race.entrants.max(:updated_at), public: true)
       end
     end
     
